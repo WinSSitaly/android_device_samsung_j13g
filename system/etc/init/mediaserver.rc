@@ -1,0 +1,8 @@
+service media /system/bin/mediaserver
+    class main
+    user media
+    group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm graphics
+    ioprio rt 4
+    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
+    setenv LD_PRELOAD libstagefright_shim.so
+    setenv LD_SHIM_LIBS /system/lib/hw/camera.scx15.so|libmemoryheapion_sprd.so:/system/lib/hw/camera2.scx15.so|libmemoryheapion_sprd.so

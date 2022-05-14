@@ -1,0 +1,154 @@
+# Inherit from SPRD common configs
+-include device/samsung/sprd-common/BoardConfigCommon.mk
+
+# Inherit from the proprietary version
+-include vendor/samsung/j13g/BoardConfigVendor.mk
+
+DEVICE_PATH := device/samsung/j13g
+
+# Platform
+TARGET_ARCH := arm
+TARGET_BOARD_PLATFORM := sc8830
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_VARIANT := cortex-a7
+TARGET_CPU_SMP := false
+ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_BOOTLOADER_BOARD_NAME := sc7727s
+BOARD_VENDOR := samsung
+
+TARGET_NO_BOOTLOADER := true
+BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1090519040
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 2445279232
+BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_FLASH_BLOCK_SIZE := 131072
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+
+# RIL
+BOARD_RIL_CLASS += ../../../device/samsung/j13g/ril
+BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
+
+# Bluetooth
+USE_BLUETOOTH_BCM4343 := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/libbt_vndcfg.txt
+
+# Wifi
+BOARD_WLAN_DEVICE := bcmdhd
+BOARD_WLAN_DEVICE_REV := bcm4343
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/dhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_STA := "/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_P2P := "/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP := "/vendor/firmware/fw_bcmdhd_apsta.bin"
+WIFI_DRIVER_NVRAM_PATH_PARAM := "/sys/module/dhd/parameters/nvram_path"
+WIFI_DRIVER_NVRAM_PATH := "/system/etc/wifi/nvram_net.txt"
+WIFI_BAND := 802_11_ABG
+
+# Graphics
+#HWUI_COMPILE_FOR_PERF := true
+TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
+BOARD_EGL_NEEDS_HANDLE_VALUE := true
+
+# HWComposer
+USE_SPRD_HWCOMPOSER := true
+USE_SPRD_DITHER := true
+
+# Bootanimation
+TARGET_SCREEN_HEIGHT := 800
+TARGET_SCREEN_WIDTH := 480
+
+# Media
+BOARD_CANT_REALLOCATE_OMX_BUFFERS := true
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+
+# Camera
+TARGET_BOARD_CAMERA_HAL_VERSION := HAL1.0
+CAMERA_SUPPORT_SIZE := 3M
+TARGET_BOARD_FRONT_CAMERA_ROTATION := true
+TARGET_BOARD_NO_FRONT_SENSOR := false
+TARGET_BOARD_CAMERA_FLASH_CTRL := false
+TARGET_BOARD_CAMERA_CAPTURE_MODE := false
+TARGET_BOARD_CAMERA_FACE_DETECT := false
+TARGET_BOARD_CAMERA_USE_IOMMU := true
+TARGET_BOARD_BACK_CAMERA_INTERFACE := ccir
+TARGET_BOARD_FRONT_CAMERA_INTERFACE := ccir
+TARGET_BOARD_CAMERA_CAF := true
+TARGET_BOARD_CAMERA_ROTATION_CAPTURE := true
+
+# Healthd
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.scx15
+
+# Charger
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_NO_CHARGER_LED := true
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+CHARGING_ENABLED_PATH := /sys/class/power_supply/battery/batt_lp_charging
+BACKLIGHT_PATH := /sys/class/backlight/panel/brightness
+
+# Kernel
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 2048
+TARGET_KERNEL_CONFIG := j13g-dt_hw01_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/j13g
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := j13g,SM-J100H,scx35,sc8830,sc7727s,sc7715,j13gxx
+
+# SELinux
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
+
+# Memory
+MALLOC_SVELTE := true
+BOARD_USES_LEGACY_MMAP := true
+
+# Bionic
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+
+# Dex-preoptimization
+#WITH_DEXPREOPT := true
+#WITH_DEXPREOPT_BOOT_IMG_ONLY := true
+
+# Build system
+WITHOUT_CHECK_API := true
+
+# Recovery
+BOARD_HAS_DOWNLOAD_MODE := true
+LZMA_RAMDISK_TARGETS := boot,recovery
+TARGET_RECOVERY_DENSITY := mdpi
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.scx15
+TARGET_RECOVERY_TWRP := true
+ifeq ($(TARGET_RECOVERY_TWRP),true)
+RECOVERY_VARIANT := twrp
+TARGET_USES_LOGD := true
+# TWRP
+TW_INTERNAL_STORAGE_PATH := "/data/media/0"
+TW_EXTERNAL_STORAGE_PATH := "/sdcard"
+TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/platform/sec-thermistor/temperature"
+TW_NO_REBOOT_BOOTLOADER := true
+TW_NO_USB_STORAGE := true
+TW_NO_EXFAT := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_USE_TOOLBOX := true
+TWRP_INCLUDE_LOGCAT := true
+TW_THEME := portrait_mdpi
+TWHAVE_SELINUX := true
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
+# UMS
+BOARD_UMS_LUNFILE := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun/file"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun/file"
+endif
