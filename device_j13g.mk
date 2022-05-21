@@ -25,8 +25,8 @@ files := \
 	$(DEVICE_PATH)/rootdir/init.scx15.rc \
 	$(DEVICE_PATH)/rootdir/init.scx15.usb.rc \
 	$(DEVICE_PATH)/rootdir/init.scx15_ss.rc \
-	$(DEVICE_PATH)/rootdir/init.vivalto3gvn.rc \
-	$(DEVICE_PATH)/rootdir/init.vivalto3gvn_base.rc \
+	$(DEVICE_PATH)/rootdir/init.j13g.rc \
+	$(DEVICE_PATH)/rootdir/init.j13g_base.rc \
 	$(DEVICE_PATH)/rootdir/init.wifi.rc \
 	$(DEVICE_PATH)/rootdir/ueventd.scx15.rc \
 	$(DEVICE_PATH)/rootdir/fstab.scx15 \
